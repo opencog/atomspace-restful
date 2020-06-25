@@ -19,27 +19,10 @@ INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR})
 # Perform tests in component-dependency order, as much as possible.
 IF (CXXTEST_FOUND)
 
-	IF (HAVE_ATOMSPACE)
-		ADD_SUBDIRECTORY (neighbors)
-
-		# Persistence is for saving/restoring atomspace to disk.
-		ADD_SUBDIRECTORY (persist)
-
-		ADD_SUBDIRECTORY (nlp)
-
-		IF (HAVE_OPENPSI)
-			ADD_SUBDIRECTORY (openpsi)
-		ENDIF (HAVE_OPENPSI)
-
-	ENDIF (HAVE_ATOMSPACE)
+	ADD_SUBDIRECTORY (persist)
 
 	IF (HAVE_CYTHON AND HAVE_NOSETESTS)
-		ADD_SUBDIRECTORY (cython)
 		ADD_SUBDIRECTORY (python)
 	ENDIF (HAVE_CYTHON AND HAVE_NOSETESTS)
 
 ENDIF (CXXTEST_FOUND)
-
-IF (HAVE_GHOST)
-	ADD_SUBDIRECTORY(ghost)
-ENDIF(HAVE_GHOST)
