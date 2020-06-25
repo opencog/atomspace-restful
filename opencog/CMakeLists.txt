@@ -4,12 +4,11 @@ INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR})
 
 # DECLARE_GUILE_CONFIG_TARGET(SCM_CONFIG "opencog restul-config" "OPENCOG_TEST")
 
-# The build order used here is loosely in terms of
-# dependencies: the later parts depend on, or may
-# someday depend on the earlier parts.
-#
-ADD_SUBDIRECTORY (events)
 ADD_SUBDIRECTORY (python)
+
+IF (HAVE_EVENT_PUBLISHING_DEPENDENCIES)
+	ADD_SUBDIRECTORY (events)
+ENDIF (HAVE_EVENT_PUBLISHING_DEPENDENCIES)
 
 # WRITE_GUILE_CONFIG(${GUILE_BIN_DIR}/opencog/restul-config.scm SCM_CONFIG TRUE)
 #
