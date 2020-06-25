@@ -7,8 +7,8 @@ from opencog.atomspace import *
 # Only run the unit tests if the required dependencies have been installed
 # (see: https://github.com/opencog/opencog/issues/337)
 try:
-    from web.api.apimain import RESTAPI
-    from web.api.utilities import count_to_confidence  # Temporary hack
+    from opencog.web.api.apimain import RESTAPI
+    from opencog.web.api.utilities import count_to_confidence  # Temporary hack
 except ImportError:
     import unittest
     raise unittest.SkipTest("ImportError exception: make sure the required "

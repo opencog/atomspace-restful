@@ -3,11 +3,11 @@ __author__ = 'Cosmo Harrigan'
 from flask import Flask, request
 from flask_restful import Api
 from flask_cors import CORS
-from web.api.apiatomcollection import *
-from web.api.apitypes import *
-from web.api.apishell import *
-from web.api.apischeme import *
-from web.api.apighost import *
+from opencog.web.api.apiatomcollection import *
+from opencog.web.api.apitypes import *
+from opencog.web.api.apishell import *
+from opencog.web.api.apischeme import *
+from opencog.web.api.apighost import *
 from flask_restful_swagger import swagger
 
 

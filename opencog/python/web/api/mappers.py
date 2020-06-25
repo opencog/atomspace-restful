@@ -13,7 +13,7 @@ from flask_restful import fields, marshal
 from opencog.atomspace import *
 
 # Temporary hack
-from web.api.utilities import count_to_confidence
+from opencog.web.api.utilities import count_to_confidence
 
 # TruthValue helpers
 class ParseTruthValue(object):

@@ -2,7 +2,7 @@ __author__ = 'Cosmo Harrigan'
 
 from flask import json, current_app
 from flask_restful import Resource, reqparse
-from web.api.mappers import *
+from opencog.web.api.mappers import *
 from flask_restful.utils import cors
 from flask_restful_swagger import swagger
 

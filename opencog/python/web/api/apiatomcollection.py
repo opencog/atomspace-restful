@@ -4,17 +4,17 @@ from flask import abort, json, current_app, jsonify
 from flask_restful import Resource, reqparse, marshal
 import opencog.cogserver
 from opencog.atomspace import Atom
-from web.api.mappers import *
+from opencog.web.api.mappers import *
 from flask_restful.utils import cors
 from flask_restful_swagger import swagger
 
 # Temporary hack
-from web.api.utilities import get_atoms_by_name
+from opencog.web.api.utilities import get_atoms_by_name
 
 # If the system doesn't have these dependencies installed, display a warning
 # but allow the API to load
 try:
-    from graph_description import dot
+    from graphviz import dot
 except ImportError:
     print ("DOT graph description format option not enabled in REST API. To " \
           "enable, install the dependencies listed here:\n" \
