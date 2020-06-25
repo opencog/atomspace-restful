@@ -4,6 +4,8 @@ AtomSpace RESTful Web API
 This module exposes a RESTful web interface to the
 [AtomSpace](https://github.com/opencog/atomspace).
 
+See http://wiki.opencog.org/w/REST_API for details.
+
 Prerequisites
 -------------
 To build and run this module, the packages listed below are required.
@@ -63,3 +65,11 @@ To build and run the unit tests, from the `./build` directory enter
 ```
     make test
 ```
+
+TODO
+----
+The current code assumes an obsolete API to the AtomSpace.  In particular,
+it does not support Values in general, and assumes that all atoms have
+a TruthValue (they don't, in general) and have an Attention value
+(they don't when they are not in the attention bank).  This needs to be
+fixed. Volunteers needed.
