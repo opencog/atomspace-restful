@@ -2,7 +2,7 @@
 # The atom_types.h file is written to the build directory
 INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR})
 
-DECLARE_GUILE_CONFIG_TARGET(SCM_CONFIG "opencog restful-config" "OPENCOG_TEST")
+# DECLARE_GUILE_CONFIG_TARGET(SCM_CONFIG "opencog restul-config" "OPENCOG_TEST")
 
 # The build order used here is loosely in terms of
 # dependencies: the later parts depend on, or may
@@ -11,7 +11,7 @@ DECLARE_GUILE_CONFIG_TARGET(SCM_CONFIG "opencog restful-config" "OPENCOG_TEST")
 ADD_SUBDIRECTORY (events)
 ADD_SUBDIRECTORY (python)
 
-WRITE_GUILE_CONFIG(${GUILE_BIN_DIR}/opencog/restful-config.scm SCM_CONFIG TRUE)
-
-WRITE_GUILE_CONFIG(${GUILE_BIN_DIR}/opencog/restful-config-installable.scm SCM_CONFIG FALSE)
-INSTALL(FILES ${GUILE_BIN_DIR}/opencog/restful-config-installable.scm DESTINATION ${GUILE_SITE_DIR}/opencog RENAME oc-config.scm)
+# WRITE_GUILE_CONFIG(${GUILE_BIN_DIR}/opencog/restul-config.scm SCM_CONFIG TRUE)
+#
+# WRITE_GUILE_CONFIG(${GUILE_BIN_DIR}/opencog/restul-config-installable.scm SCM_CONFIG FALSE)
+# INSTALL(FILES ${GUILE_BIN_DIR}/opencog/restul-config-installable.scm DESTINATION ${GUILE_SITE_DIR}/opencog RENAME restul-config.scm)
