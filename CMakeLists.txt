@@ -96,36 +96,6 @@ ELSE (COGSERVER_FOUND)
 	MESSAGE(STATUS "CogServer was not found.")
 ENDIF (COGSERVER_FOUND)
 
-# AttentionBank
-FIND_PACKAGE(AttentionBank 1.0.0 CONFIG)
-IF (ATTENTIONBANK_FOUND)
-	MESSAGE(STATUS "AttentionBank found.")
-	ADD_DEFINITIONS(-DHAVE_BANK)
-	SET(HAVE_BANK 1)
-ELSE (ATTENTIONBANK_FOUND)
-	MESSAGE(STATUS "AttentionBank was not found. OpenPsi and Ghost will not be built.")
-ENDIF (ATTENTIONBANK_FOUND)
-
-# URE
-FIND_PACKAGE(URE 1.0.0 CONFIG)
-IF (URE_FOUND)
-	MESSAGE(STATUS "URE found.")
-	ADD_DEFINITIONS(-DHAVE_URE)
-	SET(HAVE_URE 1)
-ELSE (URE_FOUND)
-	MESSAGE(STATUS "URE was not found. OpenPsi will not be built.")
-ENDIF (URE_FOUND)
-
-# PLN
-FIND_PACKAGE(PLN CONFIG)
-IF (PLN_FOUND)
-	MESSAGE(STATUS "PLN found.")
-	ADD_DEFINITIONS(-DHAVE_PLN)
-	SET(HAVE_PLN 1)
-ELSE (PLN_FOUND)
-	MESSAGE(STATUS "PLN was not found. Ghost will not be built.")
-ENDIF (PLN_FOUND)
-
 # ----------------------------------------------------------
 # Needed for unit tests
 
@@ -135,82 +105,9 @@ IF (NOT CXXTEST_FOUND)
 ENDIF (NOT CXXTEST_FOUND)
 
 # ----------------------------------------------------------
-# Glasgow Haskell compiler
-FIND_PACKAGE(GHC)
-IF (GHC_FOUND)
-	ADD_DEFINITIONS(-DHAVE_GHC)
-	SET(HAVE_GHC 1)
-ELSE (GHC_FOUND)
-	SET(GHC_DIR_MESSAGE "GHC was not found; Haskell bindings will not be built.")
-	MESSAGE(STATUS "${GHC_DIR_MESSAGE}")
-ENDIF (GHC_FOUND)
-
-FIND_PACKAGE(Stack)
-IF (STACK_FOUND)
-	ADD_DEFINITIONS(-DHAVE_STACK)
-	SET(HAVE_STACK 1)
-	SET(STACK_FOUND_MESSAGE "The Haskell Tool Stack found.")
-ELSE (STACK_FOUND)
-	SET(STACK_FOUND_MESSAGE "The Haskell Tool Stack not found.")
-ENDIF (STACK_FOUND)
-MESSAGE(STATUS "${STACK_FOUND_MESSAGE}")
-
-# ----------------------------------------------------------
-# This is required for Guile
-FIND_LIBRARY(GMP_LIBRARY gmp)
-FIND_PATH(GMP_INCLUDE_DIR gmp.h)
-
-# Gnu Guile scheme interpreter
-# Version 2.2.2 is needed for mrs io ports, compilation, atomics, nlp
-FIND_PACKAGE(Guile 2.2.2)
-IF (GUILE_FOUND AND GMP_LIBRARY AND GMP_INCLUDE_DIR)
-	ADD_DEFINITIONS(-DHAVE_GUILE)
-	SET(HAVE_GUILE 1)
-	INCLUDE_DIRECTORIES(${GUILE_INCLUDE_DIR})
-ELSE (GUILE_FOUND AND GMP_LIBRARY AND GMP_INCLUDE_DIR)
-	SET(GUILE_DIR_MESSAGE "Guile was not found; the scheme shell will not be built.\nTo over-ride, make sure GUILE_LIBRARIES and GUILE_INCLUDE_DIRS are set.")
-	MESSAGE(STATUS "${GUILE_DIR_MESSAGE}")
-ENDIF (GUILE_FOUND AND GMP_LIBRARY AND GMP_INCLUDE_DIR)
-
-# ----------------------------------------------------------
-# Link-Grammar is needed for several NLP subsystems
-# Only 5.6.2 or newer has the required API in it.
-FIND_PACKAGE(LinkGrammar 5.6.2)
-IF (LINK_GRAMMAR_FOUND)
-	SET(HAVE_LINK_GRAMMAR 1)
-	INCLUDE_DIRECTORIES(${LINK_GRAMMAR_INCLUDE_DIRS})
-ELSE (LINK_GRAMMAR_FOUND)
-	MESSAGE(STATUS "Link Grammar missing: needed for NLP.")
-ENDIF (LINK_GRAMMAR_FOUND)
-
-FIND_PACKAGE(UUID)
-IF (UUID_FOUND)
-	SET(HAVE_UUID 1)
-	INCLUDE_DIRECTORIES(${UUID_INCLUDE_DIRS})
-	ADD_DEFINITIONS(${UUID_DEFINITIONS})
-ELSE (UUID_FOUND)
-	MESSAGE(STATUS "UUID library missing: needed for NLP.")
-ENDIF (UUID_FOUND)
-
-# ----------------------------------------------------------
 # Python and Cython
 
 include(OpenCogFindPython)
-
-# ----------------------------------------------------------
-# Optional, currently needed only to hush up DRD in util/Logger.cc
-FIND_PACKAGE(VALGRIND)
-IF (VALGRIND_FOUND)
-	MESSAGE(STATUS "VALGRIND was found.")
-	IF (VALGRIND_INCLUDE_DIR)
-		MESSAGE(STATUS "VALGRIND devel headers found.")
-		ADD_DEFINITIONS(-DHAVE_VALGRIND)
-	ELSE (VALGRIND_INCLUDE_DIR)
-		MESSAGE(STATUS "VALGRIND devel headers NOT FOUND: needed for thread debugging.")
-	ENDIF (VALGRIND_INCLUDE_DIR)
-ELSE (VALGRIND_FOUND)
-	MESSAGE(STATUS "VALGRIND missing: needed for thread debugging.")
-ENDIF (VALGRIND_FOUND)
 
 # ===================================================================
 # Global includes
@@ -281,19 +178,6 @@ SET (MAN_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/share/man")
 # ==========================================================
 # Decide what to build, based on the packages found.
 
-IF(HAVE_ATOMSPACE AND HAVE_GUILE AND HAVE_BANK AND HAVE_URE)
-	SET(HAVE_OPENPSI 1)
-ENDIF(HAVE_ATOMSPACE AND HAVE_GUILE AND HAVE_BANK AND HAVE_URE)
-
-IF(HAVE_ATOMSPACE AND HAVE_GUILE AND HAVE_LINK_GRAMMAR AND HAVE_UUID)
-	SET(HAVE_NLP 1)
-ENDIF(HAVE_ATOMSPACE AND HAVE_GUILE AND HAVE_LINK_GRAMMAR AND HAVE_UUID)
-
-IF(HAVE_BANK AND HAVE_OPENPSI AND HAVE_NLP AND HAVE_PLN)
-	SET(HAVE_GHOST 1)
-ENDIF(HAVE_BANK AND HAVE_OPENPSI AND HAVE_NLP AND HAVE_PLN)
-
-ADD_SUBDIRECTORY(lib)
 ADD_SUBDIRECTORY(opencog)
 
 IF (CXXTEST_FOUND)
@@ -307,9 +191,6 @@ IF (CXXTEST_FOUND)
 			# combined across all tests (the latter is MUCH faster). Use a define?
 			# There is coverage specific stuff in AddCxxTest.cmake now...
 			# -
-			# Depends on cogserver because RESTFulTest needs it
-			# and cmake has no way to add non-test dependencies to tests
-			DEPENDS tests cogserver
 			WORKING_DIRECTORY tests
 			COMMAND ${CMAKE_CTEST_COMMAND} --force-new-ctest-process --output-on-failure $(ARGS)
 
@@ -389,15 +270,14 @@ SET(CPACK_GENERATOR "DEB")
 SET(CPACK_PACKAGE_CONTACT "opencog@googlegroups.com")
 SET(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 SET(CPACK_PACKAGE_DIRECTORY "${CMAKE_BINARY_DIR}/packages")
-SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "The Open Cognition Framework")
-SET(CPACK_PACKAGE_NAME "opencog-dev")
+SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "The AtomSpace RESTful Web API")
+SET(CPACK_PACKAGE_NAME "atomspace-restful")
 SET(CPACK_PACKAGE_VENDOR "opencog.org")
 SET(CPACK_PACKAGE_VERSION "${SEMANTIC_VERSION}-${UTC_DATE}")
 SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 SET(CPACK_PACKAGE_FILE_NAME
 	"${CPACK_PACKAGE_NAME}_${CPACK_PACKAGE_VERSION}_${PACKAGE_ARCHITECTURE}")
 SET(CPACK_PACKAGING_INSTALL_PREFIX "/usr/local")
-SET(CPACK_PACKAGE_EXECUTABLES "cogserver" "The Open Cognition Framework")
 
 ## Debian specific configurations
 SET(DEPENDENCY_LIST
@@ -422,14 +302,9 @@ ADD_SUBDIRECTORY(doc EXCLUDE_FROM_ALL)
 # ===================================================================
 # Show a summary of what we found, what we will do.
 
-SUMMARY_ADD("Cython bindings" "Cython (python) bindings" HAVE_CYTHON)
 SUMMARY_ADD("Doxygen" "Code documentation" DOXYGEN_FOUND)
 SUMMARY_ADD("Python tests" "Python bindings nose tests" HAVE_NOSETESTS)
 SUMMARY_ADD("Unit tests" "Unit tests" CXXTEST_FOUND)
-SUMMARY_ADD("NLP" "Natural Language Processing tools" HAVE_NLP)
-SUMMARY_ADD("OpenPsi" "MicroPsi OpenCog implementation" HAVE_OPENPSI)
-SUMMARY_ADD("Ghost" "Ghost chatbot" HAVE_GHOST)
-SUMMARY_ADD("Haskell codes" "Logic via Lojban" HAVE_STACK AND BUILD_LOJBAN)
 SUMMARY_ADD("REST Events" "REST Atomspace Event Publisher module"
 	HAVE_EVENT_PUBLISHING_DEPENDENCIES)
 
