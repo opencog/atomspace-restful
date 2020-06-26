@@ -16,11 +16,13 @@ from opencog.web.api.utilities import get_atoms_by_name
 try:
     from graphviz import dot
 except ImportError:
-    print ("DOT graph description format option not enabled in REST API. To " \
+    print("DOT graph description format option not enabled in REST API. To " \
           "enable, install the dependencies listed here:\n" \
           "https://github.com/opencog/opencog/tree/master/opencog/python/graph_description#prerequisites")
 
 "AtomSpace management functionality"
+
+
 class AtomCollectionAPI(Resource):
     # This is because of https://github.com/twilio/flask-restful/issues/134
     @classmethod
@@ -32,7 +34,8 @@ class AtomCollectionAPI(Resource):
         self.atom_map = global_atom_map
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument('type', type=str, action='append',
-                     location='args', choices=types.__dict__.keys())
+                                   location='args',
+                                   choices=types.__dict__.keys())
         self.reqparse.add_argument('name', type=str, location='args')
         self.reqparse.add_argument('callback', type=str, location='args')
         self.reqparse.add_argument('filterby', type=str, location='args',
@@ -61,7 +64,7 @@ class AtomCollectionAPI(Resource):
     # (https://github.com/twilio/flask-restful/pull/131):
     @cors.crossdomain(origin='*')
     @swagger.operation(
-    notes='''
+        notes='''
 <p>URI: <code>atoms/[id]</code>
 <p>(or)
 <code>atoms?type=[type]&name=[name]&filterby=[filterby]
@@ -122,36 +125,36 @@ class AtomCollectionAPI(Resource):
         nickname='get',
         parameters=[
             {
-            'name': 'id',
-            'description': '''to specifically request an atom by handle,
+                'name': 'id',
+                'description': '''to specifically request an atom by handle,
                 can be combined with <code>includeIncoming</code> or <code>includeOutgoing</code> only;
                 if specified, other query parameters will have no effect) Atom handle''',
-            'required': False,
-            'allowMultiple': False,
-            'dataType': 'int',
-            'paramType': 'path'
+                'required': False,
+                'allowMultiple': False,
+                'dataType': 'int',
+                'paramType': 'path'
             },
             {
-            'name': 'type',
-            'description': '<a href="http://wiki.opencog.org/w/OpenCog_Atom_types">OpenCog Atom type</a>',
-            'required': False,
-            'allowMultiple': False,
-            'dataType': 'string',
-            'paramType': 'query'
+                'name': 'type',
+                'description': '<a href="http://wiki.opencog.org/w/OpenCog_Atom_types">OpenCog Atom type</a>',
+                'required': False,
+                'allowMultiple': False,
+                'dataType': 'string',
+                'paramType': 'query'
             },
             {
-            'name': 'name',
-            'description': '''(not allowed for Link types). If neither
+                'name': 'name',
+                'description': '''(not allowed for Link types). If neither
                 <code>type</code> or <code>name</code> are provided,
                 all atoms will be retrieved.''',
-            'required': False,
-            'allowMultiple': False,
-            'dataType': 'string',
-            'paramType': 'query'
+                'required': False,
+                'allowMultiple': False,
+                'dataType': 'string',
+                'paramType': 'query'
             },
             {
-            'name': 'filterby',
-            'description': '''(can't be combined with type or name)
+                'name': 'filterby',
+                'description': '''(can't be combined with type or name)
                 Allows certain predefined filters
                 <dl>
                   <dt>stirange</dt>
@@ -162,117 +165,118 @@ class AtomCollectionAPI(Resource):
                   <dd>The filter 'attentionalfocus' (boolean) returns the atoms in the
                 AttentionalFocus</dd>
                 </dl>''',
-            'required': False,
-            'allowMultiple': False,
-            'dataType': 'stirange | attentionalfocus',
-            'paramType': 'query'
+                'required': False,
+                'allowMultiple': False,
+                'dataType': 'stirange | attentionalfocus',
+                'paramType': 'query'
             },
             {
-            'name': 'stimin',
-            'description': '''Only return atoms with STI (Short Term Importance)
+                'name': 'stimin',
+                'description': '''Only return atoms with STI (Short Term Importance)
                 greater than or equal to this amount (only usable with <code>filterby=stirange</code>)''',
-            'required': False,
-            'allowMultiple': False,
-            'dataType': 'float',
-            'paramType': 'query'
+                'required': False,
+                'allowMultiple': False,
+                'dataType': 'float',
+                'paramType': 'query'
             },
             {
-            'name': 'stimax',
-            'description': '''Only return atoms with STI (Short Term Importance)
+                'name': 'stimax',
+                'description': '''Only return atoms with STI (Short Term Importance)
                 less than or equal to this amount (only usable with <code>filterby=stirange</code>)''',
-            'required': False,
-            'allowMultiple': False,
-            'dataType': 'float',
-            'paramType': 'query'
+                'required': False,
+                'allowMultiple': False,
+                'dataType': 'float',
+                'paramType': 'query'
             },
             {
-            'name': 'tvStrengthMin',
-            'description': '''Only return atoms with
+                'name': 'tvStrengthMin',
+                'description': '''Only return atoms with
                 TruthValue strength greater than or equal to this amount''',
-            'required': False,
-            'allowMultiple': False,
-            'dataType': 'float',
-            'paramType': 'query'
+                'required': False,
+                'allowMultiple': False,
+                'dataType': 'float',
+                'paramType': 'query'
             },
             {
-            'name': 'tvConfidenceMin',
-            'description': '''Only return atoms with
+                'name': 'tvConfidenceMin',
+                'description': '''Only return atoms with
                 TruthValue confidence greater than or equal to this amount''',
-            'required': False,
-            'allowMultiple': False,
-            'dataType': 'float',
-            'paramType': 'query'
+                'required': False,
+                'allowMultiple': False,
+                'dataType': 'float',
+                'paramType': 'query'
             },
             {
-            'name': 'tvCountMin',
-            'description': '''Only return atoms with
+                'name': 'tvCountMin',
+                'description': '''Only return atoms with
                 TruthValue count greater than or equal to this amount''',
-            'required': False,
-            'allowMultiple': False,
-            'dataType': 'float',
-            'paramType': 'query'
+                'required': False,
+                'allowMultiple': False,
+                'dataType': 'float',
+                'paramType': 'query'
             },
             {
-            'name': 'includeIncoming',
-            'description': '''Returns the conjunction of
+                'name': 'includeIncoming',
+                'description': '''Returns the conjunction of
                 the set of atoms and their incoming sets''',
-            'required': False,
-            'allowMultiple': False,
-            'dataType': 'boolean',
-            'paramType': 'query'
+                'required': False,
+                'allowMultiple': False,
+                'dataType': 'boolean',
+                'paramType': 'query'
             },
             {
-            'name': 'includeOutgoing',
-            'description': '''Returns the conjunction of
+                'name': 'includeOutgoing',
+                'description': '''Returns the conjunction of
                 the set of atoms and their outgoing sets. Useful in combination
                 with includeIncoming.''',
-            'required': False,
-            'allowMultiple': False,
-            'dataType': 'boolean',
-            'paramType': 'query'
+                'required': False,
+                'allowMultiple': False,
+                'dataType': 'boolean',
+                'paramType': 'query'
             },
             {
-            'name': 'dot',
-            'description': '''Returns the atom set represented in
+                'name': 'dot',
+                'description': '''Returns the atom set represented in
                 the DOT graph description language
                 (See <a href="https://github.com/opencog/opencog/blob/master/opencog/python/graph_description/README.md">opencog/python/graph_description/README.md</a> for details)''',
-            'required': False,
-            'allowMultiple': False,
-            'dataType': 'boolean',
-            'paramType': 'query'
+                'required': False,
+                'allowMultiple': False,
+                'dataType': 'boolean',
+                'paramType': 'query'
             },
             {
-            'name': 'limit',
-            'description': '''To specify the maximum number of atoms to be returned.
+                'name': 'limit',
+                'description': '''To specify the maximum number of atoms to be returned.
                 If the query results are greater than the number specified by
                 <code>limit</code>, then the result set list is truncated to the
                 first <code>limit</code> number of atoms.''',
-            'required': False,
-            'allowMultiple': False,
-            'dataType': 'int',
-            'paramType': 'query'
+                'required': False,
+                'allowMultiple': False,
+                'dataType': 'int',
+                'paramType': 'query'
             },
             {
-            'name': 'callback',
-            'description': '''JavaScript callback function for JSONP support''',
-            'required': False,
-            'allowMultiple': False,
-            'dataType': 'string',
-            'paramType': 'query'
+                'name': 'callback',
+                'description': '''JavaScript callback function for JSONP support''',
+                'required': False,
+                'allowMultiple': False,
+                'dataType': 'string',
+                'paramType': 'query'
             }
         ],
         responseMessages=[
-            {'code': 200, 'message': 'Returned list of atoms matching specified criteria'},
-            {'code': 400, 'message': 'Invalid request: stirange filter requires stimin parameter'}
+            {'code': 200,
+             'message': 'Returned list of atoms matching specified criteria'},
+            {'code': 400,
+             'message': 'Invalid request: stirange filter requires stimin parameter'}
         ]
     )
-
     def get(self, id=""):
-        retval = jsonify({'error':'Internal error'})
+        retval = jsonify({'error': 'Internal error'})
         try:
-           retval = self._get(id=id)
+            retval = self._get(id=id)
         except Exception as e:
-           retval = jsonify({'error!!':str(e)})
+            retval = jsonify({'error!!': str(e)})
         return retval
 
     def _get(self, id=""):
@@ -328,25 +332,25 @@ class AtomCollectionAPI(Resource):
                 elif name is None:
                     atoms = []
                     for t in type:
-                         atoms = atoms + self.atomspace.get_atoms_by_type(
-                                           types.__dict__.get(t))
+                        atoms = atoms + self.atomspace.get_atoms_by_type(
+                            types.__dict__.get(t))
                 else:
                     if type is None:
                         type = ['Node']
                     for t in type:
                         atoms = list(get_atoms_by_name(types.__dict__.get(t),
-                                    name, self.atomspace))
+                                                       name, self.atomspace))
 
             # Optionally, filter by TruthValue
             if tv_strength_min is not None:
                 atoms = [atom for atom in atoms if atom.tv.mean >=
-                                                   tv_strength_min]
+                         tv_strength_min]
             if tv_confidence_min is not None:
                 atoms = [atom for atom in atoms if atom.tv.confidence >=
-                                                   tv_confidence_min]
+                         tv_confidence_min]
             if tv_count_min is not None:
                 atoms = [atom for atom in atoms if atom.tv.count >=
-                                                   tv_count_min]
+                         tv_count_min]
         # Optionally, include the incoming set
         if include_incoming in ['True', 'true', '1']:
             atoms = self.atomspace.include_incoming(atoms)
@@ -379,7 +383,7 @@ class AtomCollectionAPI(Resource):
             return jsonify({'result': dot_output})
 
     @swagger.operation(
-    notes='''
+        notes='''
 Include data with the POST request providing a JSON representation of
 the atom.
 
@@ -449,28 +453,28 @@ the atom. Example:
   }
 }
 </pre>''',
-    responseClass=Atom,
-    nickname='post',
-    parameters=[
-        {
-        'name': 'type',
-        'description': '<a href="http://wiki.opencog.org/w/OpenCog_Atom_types">OpenCog Atom type</a>',
-        'required': True,
-        'allowMultiple': False,
-        'dataType': 'string',
-        'paramType': 'body'
-        },
-        {
-        'name': 'name',
-        'description': '''(required for Node types, not allowed for Link types) Atom name''',
-        'required': True,
-        'allowMultiple': False,
-        'dataType': 'string',
-        'paramType': 'body'
-        },
-        {
-        'name': 'truthvalue',
-        'description': '''<a href="http://wiki.opencog.org/w/TruthValue">TruthValue</a>, formatted as follows:
+        responseClass=Atom,
+        nickname='post',
+        parameters=[
+            {
+                'name': 'type',
+                'description': '<a href="http://wiki.opencog.org/w/OpenCog_Atom_types">OpenCog Atom type</a>',
+                'required': True,
+                'allowMultiple': False,
+                'dataType': 'string',
+                'paramType': 'body'
+            },
+            {
+                'name': 'name',
+                'description': '''(required for Node types, not allowed for Link types) Atom name''',
+                'required': True,
+                'allowMultiple': False,
+                'dataType': 'string',
+                'paramType': 'body'
+            },
+            {
+                'name': 'truthvalue',
+                'description': '''<a href="http://wiki.opencog.org/w/TruthValue">TruthValue</a>, formatted as follows:
             <dl>
               <dt><code>type</code> (required)</dt>
               <dd><a href="http://wiki.opencog.org/w/TruthValue">TruthValue type</a>
@@ -483,26 +487,28 @@ the atom. Example:
             </ul>
               </dd>
             </dl>''',
-        'required': True,
-        'allowMultiple': False,
-        'dataType': 'TruthValue',
-        'paramType': 'body'
-        },
-        {
-        'name': 'outgoing',
-        'description': '''The set of arguments of the relation, formatted as
+                'required': True,
+                'allowMultiple': False,
+                'dataType': 'TruthValue',
+                'paramType': 'body'
+            },
+            {
+                'name': 'outgoing',
+                'description': '''The set of arguments of the relation, formatted as
             <a href="http://wiki.opencog.org/w/Link#Incoming_and_Outgoing_Sets">a list of Atom handles (only valid for Links, not nodes)</a>''',
-        'required': False,
-        'allowMultiple': False,
-        'dataType': 'list',
-        'paramType': 'body'
-        }
-    ],
-    responseMessages=[
-        {'code': 200, 'message': 'Created specified list of atoms'},
-        {'code': 400, 'message': 'Invalid type or required parameter type missing'},
-        {'code': 500, 'message': 'Error processing request. Check your parameters'}
-    ]
+                'required': False,
+                'allowMultiple': False,
+                'dataType': 'list',
+                'paramType': 'body'
+            }
+        ],
+        responseMessages=[
+            {'code': 200, 'message': 'Created specified list of atoms'},
+            {'code': 400,
+             'message': 'Invalid type or required parameter type missing'},
+            {'code': 500,
+             'message': 'Error processing request. Check your parameters'}
+        ]
     )
     def post(self):
         """
@@ -526,10 +532,10 @@ the atom. Example:
 
         # Outgoing set
         if 'outgoing' in data:
-            print (data)
+            print(data)
             if len(data['outgoing']) > 0:
                 outgoing = [self.atom_map.get_atom(uid)
-                                for uid in data['outgoing']]
+                            for uid in data['outgoing']]
         else:
             outgoing = None
 
@@ -559,7 +565,7 @@ the atom. Example:
         return {'atoms': dictoid}
 
     @swagger.operation(
-    notes='''
+        notes='''
 URI: <code>atoms/[id]</code>
 
 <p>Include data with the PUT request providing a JSON representation of
@@ -620,20 +626,20 @@ containing the atom.
   }
 }
 </pre>''',
-    responseClass=Atom,
-    nickname='put',
-    parameters=[
-        {
-        'name': 'id',
-        'description': '<a href="http://wiki.opencog.org/w/Atom">Atom handle</a>',
-        'required': True,
-        'allowMultiple': False,
-        'dataType': 'int',
-        'paramType': 'path'
-        },
-        {
-        'name': 'truthvalue',
-        'description': '''<a href="http://wiki.opencog.org/w/TruthValue">TruthValue</a>, formatted as follows:
+        responseClass=Atom,
+        nickname='put',
+        parameters=[
+            {
+                'name': 'id',
+                'description': '<a href="http://wiki.opencog.org/w/Atom">Atom handle</a>',
+                'required': True,
+                'allowMultiple': False,
+                'dataType': 'int',
+                'paramType': 'path'
+            },
+            {
+                'name': 'truthvalue',
+                'description': '''<a href="http://wiki.opencog.org/w/TruthValue">TruthValue</a>, formatted as follows:
             <dl>
               <dt><code>type</code> (required)</dt>
               <dd><a href="http://wiki.opencog.org/w/TruthValue">TruthValue type</a>
@@ -646,14 +652,14 @@ containing the atom.
             </ul>
               </dd>
             </dl>''',
-        'required': False,
-        'allowMultiple': False,
-        'dataType': 'TruthValue',
-        'paramType': 'body'
-        },
-        {
-        'name': 'attentionvalue',
-        'description': '''<a href="http://wiki.opencog.org/w/AttentionValue">AttentionValue</a>, formatted as follows:
+                'required': False,
+                'allowMultiple': False,
+                'dataType': 'TruthValue',
+                'paramType': 'body'
+            },
+            {
+                'name': 'attentionvalue',
+                'description': '''<a href="http://wiki.opencog.org/w/AttentionValue">AttentionValue</a>, formatted as follows:
             <dl>
               <dt><code>sti</code> (optional)</dt>
               <dd>Short-Term Importance</dd>
@@ -662,17 +668,19 @@ containing the atom.
               <dt><code>vlti</code> (optional)</dt>
               <dd>Very-Long-Term Importance</dd>
             </dl>''',
-        'required': False,
-        'allowMultiple': False,
-        'dataType': 'AttentionValue',
-        'paramType': 'body'
-        }
-    ],
-    responseMessages=[
-        {'code': 200, 'message': 'Atom truth and/or attention value updated'},
-        {'code': 400, 'message': 'Invalid type or required parameter type missing'},
-        {'code': 404, 'message': 'Atom not found'}
-    ]
+                'required': False,
+                'allowMultiple': False,
+                'dataType': 'AttentionValue',
+                'paramType': 'body'
+            }
+        ],
+        responseMessages=[
+            {'code': 200,
+             'message': 'Atom truth and/or attention value updated'},
+            {'code': 400,
+             'message': 'Invalid type or required parameter type missing'},
+            {'code': 404, 'message': 'Atom not found'}
+        ]
     )
     def put(self, id):
         """
@@ -704,7 +712,7 @@ containing the atom.
             abort(404, 'Atom not found')
 
     @swagger.operation(
-    notes='''
+        notes='''
 Returns a JSON representation of the result, indicating success or failure.
 
 <p>Example:
@@ -718,22 +726,22 @@ Returns a JSON representation of the result, indicating success or failure.
   }
 }
 </pre>''',
-    responseClass='result',
-    nickname='delete',
-    parameters=[
-        {
-        'name': 'id',
-        'description': '<a href="http://wiki.opencog.org/w/Atom">Atom handle</a>',
-        'required': True,
-        'allowMultiple': False,
-        'dataType': 'int',
-        'paramType': 'path'
-        }
-    ],
-    responseMessages=[
-        {'code': 200, 'message': 'Deleted the atom'},
-        {'code': 404, 'message': 'Atom not found'},
-    ]
+        responseClass='result',
+        nickname='delete',
+        parameters=[
+            {
+                'name': 'id',
+                'description': '<a href="http://wiki.opencog.org/w/Atom">Atom handle</a>',
+                'required': True,
+                'allowMultiple': False,
+                'dataType': 'int',
+                'paramType': 'path'
+            }
+        ],
+        responseMessages=[
+            {'code': 200, 'message': 'Deleted the atom'},
+            {'code': 404, 'message': 'Atom not found'},
+        ]
     )
     def delete(self, id):
         """
