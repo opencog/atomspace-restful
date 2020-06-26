@@ -32,7 +32,6 @@ truthvalue = {'type': 'simple', 'details': {'strength': 0.08, 'count': 0.2}}
 atom = {'type': 'ConceptNode', 'name': 'giant_frog', 'truthvalue': truthvalue}
 post_response = post(uri + 'atoms', data=json.dumps(atom), headers=headers)
 post_result = post_response.json()
-print(post_result)
 pprint(post_response, post_result)
 '''
 POST /api/v1.1/atoms:
@@ -59,7 +58,7 @@ POST /api/v1.1/atoms:
 '''
 
 # GET the newly created node
-handle_node_1 = post_result['handle']
+handle_node_1 = post_result['atoms']['handle']
 get_response = get(uri + 'atoms/' + str(handle_node_1))
 get_result = get_response.json()['result']['atoms']
 pprint(get_response, get_result)
@@ -88,7 +87,7 @@ GET /api/v1.1/atoms/57:
 '''
 
 # GET the newly created node by name
-name = post_result['name']
+name = post_result['atoms']['name']
 get_response = get(uri + 'atoms', params={'name': name})
 get_result = get_response.json()['result']['atoms'][0]
 pprint(get_response, get_result)
@@ -117,8 +116,7 @@ GET /api/v1.1/atoms?name=giant_frog:
 '''
 
 # GET the newly created node by name and type
-type = post_result['type']
-#get_response = get(uri + 'atoms?name=' + name + '&type=' + type)
+type = post_result['atoms']['type']
 get_response = get(uri + 'atoms', params={'name': name, 'type': type})
 get_result = get_response.json()['result']['atoms'][0]
 pprint(get_response, get_result)

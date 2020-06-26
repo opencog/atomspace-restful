@@ -46,7 +46,7 @@ class ParseTruthValue(object):
         if 'details' in data['truthvalue']:
             if 'strength' in data['truthvalue']['details'] \
                 and 'count' in data['truthvalue']['details']:
-                tv = TruthValue(data['truthvalue']['details']['strength'],
+                tv = createTruthValue(data['truthvalue']['details']['strength'],
                                 count_to_confidence(
                                     data['truthvalue']['details']['count']))
             else:
