@@ -9,11 +9,11 @@ LINK_DIRECTORIES(
 )
 
 LINK_LIBRARIES(
-	${COGSERVER_LIBRARIES}
-	${ATOMSPACE_LIBRARIES}
-	zmq
-	tbb
-	attention-types
+    ${COGSERVER_LIBRARIES}
+    ${ATOMSPACE_LIBRARIES}
+    zmq
+    tbb
+    attention-types
     attention
     atomspacepublishermodule
 )

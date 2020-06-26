@@ -61,7 +61,7 @@ class AtomCollectionAPI(Resource):
     # (https://github.com/twilio/flask-restful/pull/131):
     @cors.crossdomain(origin='*')
     @swagger.operation(
-	notes='''
+    notes='''
 <p>URI: <code>atoms/[id]</code>
 <p>(or)
 <code>atoms?type=[type]&name=[name]&filterby=[filterby]
@@ -337,8 +337,8 @@ class AtomCollectionAPI(Resource):
                     if type is None:
                         type = ['Node']
                     for t in type:
-                        atoms = get_atoms_by_name(types.__dict__.get(t),
-                                    name, self.atomspace)
+                        atoms = list(get_atoms_by_name(types.__dict__.get(t),
+                                    name, self.atomspace))
 
             # Optionally, filter by TruthValue
             if tv_strength_min is not None:
@@ -688,27 +688,27 @@ containing the atom.
 
         # If the atom is not found in the atomspace.
         the_atom = self.atom_map.get_atom(id)
-        if the_atom == None:
+        if the_atom is not None:
+            # Prepare the atom data
+            data = reqparse.request.get_json()
+
+            if 'truthvalue' not in data and 'attentionvalue' not in data:
+                abort(400, 'Invalid request: you must include a truthvalue or '
+                           'attentionvalue parameter')
+
+            if 'truthvalue' in data:
+                tv = ParseTruthValue.parse(data)
+                the_atom.tv = tv
+
+            if 'attentionvalue' in data:
+                (sti, lti, vlti) = ParseAttentionValue.parse(data)
+                the_atom.av = {'sti': sti, 'lti': lti, 'vlti': vlti}
+
+            dicty = marshal(the_atom, atom_fields)
+            dicty['handle'] = self.atom_map.get_uid(the_atom)
+            return {'atoms': dicty}
+        else:
             abort(404, 'Atom not found')
-
-        # Prepare the atom data
-        data = reqparse.request.get_json()
-
-        if 'truthvalue' not in data and 'attentionvalue' not in data:
-            abort(400, 'Invalid request: you must include a truthvalue or '
-                       'attentionvalue parameter')
-
-        if 'truthvalue' in data:
-            tv = ParseTruthValue.parse(data)
-            the_atom.tv = tv
-
-        if 'attentionvalue' in data:
-            (sti, lti, vlti) = ParseAttentionValue.parse(data)
-            the_atom.av = {'sti': sti, 'lti': lti, 'vlti': vlti}
-
-        dicty = marshal(the_atom, atom_fields)
-        dicty['handle'] = self.atom_map.get_uid(the_atom)
-        return {'atoms': dicty}
 
     @swagger.operation(
 	notes='''
@@ -748,10 +748,10 @@ Returns a JSON representation of the result, indicating success or failure.
         """
 
         atom = self.atom_map.get_atom(id)
-        if atom == None:
+        if atom is not None:
+            status = self.atomspace.remove(atom)
+            self.atom_map.remove(atom, id)
+            response = DeleteAtomResponse(id, status)
+            return {'result': response.format()}
+        else:
             abort(404, 'Atom not found')
-
-        status = self.atomspace.remove(atom)
-        self.atom_map.remove(atom, id)
-        response = DeleteAtomResponse(id, status)
-        return {'result': response.format()}

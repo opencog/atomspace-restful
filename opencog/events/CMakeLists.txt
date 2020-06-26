@@ -8,8 +8,8 @@ ADD_LIBRARY (atomspacepublishermodule SHARED
 TARGET_LINK_LIBRARIES(atomspacepublishermodule
 	server
 	${ATOMSPACE_LIBRARIES}
-  ${JSONCPP_LIBRARIES}
-  ${ZMQ_LIBRARIES}
+	${JSONCPP_LIBRARIES}
+	${ZMQ_LIBRARIES}
 	tbb
 )
 
