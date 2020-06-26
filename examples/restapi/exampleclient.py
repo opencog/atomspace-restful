@@ -21,8 +21,8 @@ headers = {'content-type': 'application/json'}
 
 # Pretty print function for displaying JSON request/response information
 def pprint(call, contents):
-    print '\n' + call.request.method + ' ' + call.request.path_url + ':'
-    print json.dumps(contents, indent=2)
+    print('\n' + call.request.method + ' ' + call.request.path_url + ':')
+    print(json.dumps(contents, indent=2))
 
 ####################################################################
 # Example POST and GET requests to create and read nodes and links #
@@ -31,7 +31,8 @@ def pprint(call, contents):
 truthvalue = {'type': 'simple', 'details': {'strength': 0.08, 'count': 0.2}}
 atom = {'type': 'ConceptNode', 'name': 'giant_frog', 'truthvalue': truthvalue}
 post_response = post(uri + 'atoms', data=json.dumps(atom), headers=headers)
-post_result = post_response.json()['atoms']
+post_result = post_response.json()
+print(post_result)
 pprint(post_response, post_result)
 '''
 POST /api/v1.1/atoms:
