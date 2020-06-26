@@ -118,153 +118,153 @@ class AtomCollectionAPI(Resource):
   <dd>URI: <code>atoms?filterby=stirange&stimin=5</code></dd>
 </dl>
 ''',
-    responseClass=Atom,
-    nickname='get',
-    parameters=[
-        {
-        'name': 'id',
-        'description': '''to specifically request an atom by handle,
-            can be combined with <code>includeIncoming</code> or <code>includeOutgoing</code> only;
-            if specified, other query parameters will have no effect) Atom handle''',
-        'required': False,
-        'allowMultiple': False,
-        'dataType': 'int',
-        'paramType': 'path'
-        },
-        {
-        'name': 'type',
-        'description': '<a href="http://wiki.opencog.org/w/OpenCog_Atom_types">OpenCog Atom type</a>',
-        'required': False,
-        'allowMultiple': False,
-        'dataType': 'string',
-        'paramType': 'query'
-        },
-        {
-        'name': 'name',
-        'description': '''(not allowed for Link types). If neither
-            <code>type</code> or <code>name</code> are provided,
-            all atoms will be retrieved.''',
-        'required': False,
-        'allowMultiple': False,
-        'dataType': 'string',
-        'paramType': 'query'
-        },
-        {
-        'name': 'filterby',
-        'description': '''(can't be combined with type or name)
-            Allows certain predefined filters
-            <dl>
-              <dt>stirange</dt>
-              <dd>The filter 'stirange' allows the additional parameters 'stimin'
-            (required, int) and 'stimax' (optional, int) and returns the atoms
-            in a given STI range</dd>
-              <dt>attentionalfocus</dt>
-              <dd>The filter 'attentionalfocus' (boolean) returns the atoms in the
-            AttentionalFocus</dd>
-            </dl>''',
-        'required': False,
-        'allowMultiple': False,
-        'dataType': 'stirange | attentionalfocus',
-        'paramType': 'query'
-        },
-        {
-        'name': 'stimin',
-        'description': '''Only return atoms with STI (Short Term Importance)
-            greater than or equal to this amount (only usable with <code>filterby=stirange</code>)''',
-        'required': False,
-        'allowMultiple': False,
-        'dataType': 'float',
-        'paramType': 'query'
-        },
-        {
-        'name': 'stimax',
-        'description': '''Only return atoms with STI (Short Term Importance)
-            less than or equal to this amount (only usable with <code>filterby=stirange</code>)''',
-        'required': False,
-        'allowMultiple': False,
-        'dataType': 'float',
-        'paramType': 'query'
-        },
-        {
-        'name': 'tvStrengthMin',
-        'description': '''Only return atoms with
-            TruthValue strength greater than or equal to this amount''',
-        'required': False,
-        'allowMultiple': False,
-        'dataType': 'float',
-        'paramType': 'query'
-        },
-        {
-        'name': 'tvConfidenceMin',
-        'description': '''Only return atoms with
-            TruthValue confidence greater than or equal to this amount''',
-        'required': False,
-        'allowMultiple': False,
-        'dataType': 'float',
-        'paramType': 'query'
-        },
-        {
-        'name': 'tvCountMin',
-        'description': '''Only return atoms with
-            TruthValue count greater than or equal to this amount''',
-        'required': False,
-        'allowMultiple': False,
-        'dataType': 'float',
-        'paramType': 'query'
-        },
-        {
-        'name': 'includeIncoming',
-        'description': '''Returns the conjunction of
-            the set of atoms and their incoming sets''',
-        'required': False,
-        'allowMultiple': False,
-        'dataType': 'boolean',
-        'paramType': 'query'
-        },
-        {
-        'name': 'includeOutgoing',
-        'description': '''Returns the conjunction of
-            the set of atoms and their outgoing sets. Useful in combination
-            with includeIncoming.''',
-        'required': False,
-        'allowMultiple': False,
-        'dataType': 'boolean',
-        'paramType': 'query'
-        },
-        {
-        'name': 'dot',
-        'description': '''Returns the atom set represented in
-            the DOT graph description language
-            (See <a href="https://github.com/opencog/opencog/blob/master/opencog/python/graph_description/README.md">opencog/python/graph_description/README.md</a> for details)''',
-        'required': False,
-        'allowMultiple': False,
-        'dataType': 'boolean',
-        'paramType': 'query'
-        },
-        {
-        'name': 'limit',
-        'description': '''To specify the maximum number of atoms to be returned.
-            If the query results are greater than the number specified by
-            <code>limit</code>, then the result set list is truncated to the
-            first <code>limit</code> number of atoms.''',
-        'required': False,
-        'allowMultiple': False,
-        'dataType': 'int',
-        'paramType': 'query'
-        },
-        {
-        'name': 'callback',
-        'description': '''JavaScript callback function for JSONP support''',
-        'required': False,
-        'allowMultiple': False,
-        'dataType': 'string',
-        'paramType': 'query'
-        }
-    ],
-    responseMessages=[
-        {'code': 200, 'message': 'Returned list of atoms matching specified criteria'},
-        {'code': 400, 'message': 'Invalid request: stirange filter requires stimin parameter'}
-    ]
+        responseClass=Atom,
+        nickname='get',
+        parameters=[
+            {
+            'name': 'id',
+            'description': '''to specifically request an atom by handle,
+                can be combined with <code>includeIncoming</code> or <code>includeOutgoing</code> only;
+                if specified, other query parameters will have no effect) Atom handle''',
+            'required': False,
+            'allowMultiple': False,
+            'dataType': 'int',
+            'paramType': 'path'
+            },
+            {
+            'name': 'type',
+            'description': '<a href="http://wiki.opencog.org/w/OpenCog_Atom_types">OpenCog Atom type</a>',
+            'required': False,
+            'allowMultiple': False,
+            'dataType': 'string',
+            'paramType': 'query'
+            },
+            {
+            'name': 'name',
+            'description': '''(not allowed for Link types). If neither
+                <code>type</code> or <code>name</code> are provided,
+                all atoms will be retrieved.''',
+            'required': False,
+            'allowMultiple': False,
+            'dataType': 'string',
+            'paramType': 'query'
+            },
+            {
+            'name': 'filterby',
+            'description': '''(can't be combined with type or name)
+                Allows certain predefined filters
+                <dl>
+                  <dt>stirange</dt>
+                  <dd>The filter 'stirange' allows the additional parameters 'stimin'
+                (required, int) and 'stimax' (optional, int) and returns the atoms
+                in a given STI range</dd>
+                  <dt>attentionalfocus</dt>
+                  <dd>The filter 'attentionalfocus' (boolean) returns the atoms in the
+                AttentionalFocus</dd>
+                </dl>''',
+            'required': False,
+            'allowMultiple': False,
+            'dataType': 'stirange | attentionalfocus',
+            'paramType': 'query'
+            },
+            {
+            'name': 'stimin',
+            'description': '''Only return atoms with STI (Short Term Importance)
+                greater than or equal to this amount (only usable with <code>filterby=stirange</code>)''',
+            'required': False,
+            'allowMultiple': False,
+            'dataType': 'float',
+            'paramType': 'query'
+            },
+            {
+            'name': 'stimax',
+            'description': '''Only return atoms with STI (Short Term Importance)
+                less than or equal to this amount (only usable with <code>filterby=stirange</code>)''',
+            'required': False,
+            'allowMultiple': False,
+            'dataType': 'float',
+            'paramType': 'query'
+            },
+            {
+            'name': 'tvStrengthMin',
+            'description': '''Only return atoms with
+                TruthValue strength greater than or equal to this amount''',
+            'required': False,
+            'allowMultiple': False,
+            'dataType': 'float',
+            'paramType': 'query'
+            },
+            {
+            'name': 'tvConfidenceMin',
+            'description': '''Only return atoms with
+                TruthValue confidence greater than or equal to this amount''',
+            'required': False,
+            'allowMultiple': False,
+            'dataType': 'float',
+            'paramType': 'query'
+            },
+            {
+            'name': 'tvCountMin',
+            'description': '''Only return atoms with
+                TruthValue count greater than or equal to this amount''',
+            'required': False,
+            'allowMultiple': False,
+            'dataType': 'float',
+            'paramType': 'query'
+            },
+            {
+            'name': 'includeIncoming',
+            'description': '''Returns the conjunction of
+                the set of atoms and their incoming sets''',
+            'required': False,
+            'allowMultiple': False,
+            'dataType': 'boolean',
+            'paramType': 'query'
+            },
+            {
+            'name': 'includeOutgoing',
+            'description': '''Returns the conjunction of
+                the set of atoms and their outgoing sets. Useful in combination
+                with includeIncoming.''',
+            'required': False,
+            'allowMultiple': False,
+            'dataType': 'boolean',
+            'paramType': 'query'
+            },
+            {
+            'name': 'dot',
+            'description': '''Returns the atom set represented in
+                the DOT graph description language
+                (See <a href="https://github.com/opencog/opencog/blob/master/opencog/python/graph_description/README.md">opencog/python/graph_description/README.md</a> for details)''',
+            'required': False,
+            'allowMultiple': False,
+            'dataType': 'boolean',
+            'paramType': 'query'
+            },
+            {
+            'name': 'limit',
+            'description': '''To specify the maximum number of atoms to be returned.
+                If the query results are greater than the number specified by
+                <code>limit</code>, then the result set list is truncated to the
+                first <code>limit</code> number of atoms.''',
+            'required': False,
+            'allowMultiple': False,
+            'dataType': 'int',
+            'paramType': 'query'
+            },
+            {
+            'name': 'callback',
+            'description': '''JavaScript callback function for JSONP support''',
+            'required': False,
+            'allowMultiple': False,
+            'dataType': 'string',
+            'paramType': 'query'
+            }
+        ],
+        responseMessages=[
+            {'code': 200, 'message': 'Returned list of atoms matching specified criteria'},
+            {'code': 400, 'message': 'Invalid request: stirange filter requires stimin parameter'}
+        ]
     )
 
     def get(self, id=""):
