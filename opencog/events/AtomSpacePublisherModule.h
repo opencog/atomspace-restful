@@ -34,11 +34,46 @@
 #include <tbb/concurrent_queue.h>
 
 #include <opencog/util/sigslot.h>
-#include <opencog/util/tbb.h>
 
 #include <opencog/cogserver/server/Module.h>
 #include <opencog/cogserver/server/CogServer.h>
+#include <opencog/attentionbank/bank/AttentionBank.h>
 
+#ifndef TBB_H
+#define TBB_H
+
+/*
+ * Helper function for tbb::task::enqueue
+ *
+ * Enqueue a task for execution by the TBB task scheduler using lambda expressions
+ *
+ * Usage:
+ *
+ *   tbb_enqueue_lambda( []{
+ *       // put code here
+ *   } );
+ *
+ * More information:
+ *   http://www.threadingbuildingblocks.org/docs/help/index.htm#reference/task_scheduler/task_cls.htm
+ */
+
+template<typename F>
+class lambda_task : public tbb::task {
+    F my_func;
+    tbb::task* execute() {
+        my_func();
+        return NULL;
+    }
+public:
+    lambda_task(const F& f) : my_func(f) {}
+};
+
+template<typename F>
+void tbb_enqueue_lambda(const F& f) {
+    tbb::task::enqueue(*new(tbb::task::allocate_root()) lambda_task<F>(f));
+}
+
+#endif // TBB_H
 
 namespace opencog
 {
@@ -91,7 +126,8 @@ class AtomSpacePublisherModule : public Module
 private:
 		AtomSpace* as;
 
-		AtomPtrSignal* _remove_atom_signal;
+		AtomSignal* _remove_atom_signal;
+//		AtomPairSignal* _remove_atom_signal;
 		int _remove_atom_connection;
 
 		AtomSignal* _add_atom_signal;

@@ -1,4 +1,4 @@
-from web.api.apimain import RESTAPI
+from opencog.web.api.apimain import RESTAPI
 from opencog.atomspace import AtomSpace, types
 from opencog.utilities import initialize_opencog
 from opencog.type_constructors import *

@@ -2,7 +2,7 @@ __author__ = 'Cosmo Harrigan'
 
 import socket
 import opencog.cogserver
-from web.api.apimain import RESTAPI
+from opencog.web.api.apimain import RESTAPI
 from threading import Thread
 
 # Endpoint configuration

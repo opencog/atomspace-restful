@@ -33,7 +33,7 @@
 
 #include <opencog/util/Config.h>
 #include <opencog/util/Logger.h>
-#include <opencog/util/tbb.h>
+//#include <opencog/util/tbb.h>
 
 #include <opencog/atoms/atom_types/NameServer.h>
 
@@ -44,6 +44,7 @@
 #include <opencog/atomspace/AtomSpace.h>
 #include <opencog/atoms/base/Link.h>
 #include <opencog/cogserver/server/CogServer.h>
+#include <opencog/attentionbank/bank/AttentionBank.h>
 #include "AtomSpacePublisherModule.h"
 
 using namespace std;
@@ -119,8 +120,11 @@ void AtomSpacePublisherModule::enableSignals()
 			std::bind(
 			&AtomSpacePublisherModule::TVChangedSignal, this, _1, _2, _3));
 	}
-ttentionValuePtr& av_old,
-                                               const AttentionValuePtr& av_new)
+}
+
+void AtomSpacePublisherModule::AVChangedSignal(const Handle& h,
+		                     const AttentionValuePtr& av_old,
+		                     const AttentionValuePtr& av_new)
 {
 	tbb_enqueue_lambda([=] {
 		sendMessage("avChanged", avMessage(atomToJSON(h),

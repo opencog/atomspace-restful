@@ -21,6 +21,10 @@ ENDIF(CMAKE_VERSION VERSION_GREATER 3.0.2)
 
 PROJECT(opencog)
 
+FIND_PACKAGE(Boost 1.71 REQUIRED date_time program_options thread filesystem system unit_test_framework)
+IF(${Boost_FOUND})
+  INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
+ENDIF()
 # ----------------------------------------------------------
 # User-modifiable options. Feel free to change these!
 #
@@ -152,6 +156,16 @@ ENDIF (HAVE_JSONCPP AND HAVE_TBB AND HAVE_ZMQ)
 
 # ===================================================================
 # Include configuration.
+
+# AttentionBank
+FIND_PACKAGE(AttentionBank 1.0.0 CONFIG)
+IF (ATTENTIONBANK_FOUND)
+	MESSAGE(STATUS "AttentionBank found.")
+	ADD_DEFINITIONS(-DHAVE_BANK)
+	SET(HAVE_BANK 1)
+ELSE (ATTENTIONBANK_FOUND)
+	MESSAGE(STATUS "AttentionBank was not found. OpenPsi and Ghost will not be built.")
+ENDIF (ATTENTIONBANK_FOUND)
 
 # Set default include paths.
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}

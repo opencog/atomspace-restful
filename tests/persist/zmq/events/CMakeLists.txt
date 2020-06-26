@@ -13,6 +13,9 @@ LINK_LIBRARIES(
 	${ATOMSPACE_LIBRARIES}
 	zmq
 	tbb
+	attention-types
+    attention
+    atomspacepublishermodule
 )
 
 ADD_CXXTEST(AtomSpacePublisherModuleUTest)
