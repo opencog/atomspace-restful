@@ -11,7 +11,7 @@ __author__ = 'Cosmo Harrigan'
 from flask import abort
 from flask_restful import fields, marshal
 from opencog.atomspace import *
-
+from opencog.bank import AttentionBank
 # Temporary hack
 from opencog.web.api.utilities import count_to_confidence
 
@@ -162,5 +162,4 @@ atom_fields = {
     'outgoing': FormatHandleList(attribute='out'),
     'incoming': FormatHandleList(attribute='incoming'),
     'truthvalue': FormatTruthValue(attribute='tv'),
-    'attentionvalue': fields.Nested(av_fields, attribute='av')
 }

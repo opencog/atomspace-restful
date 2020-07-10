@@ -7,6 +7,7 @@ from opencog.atomspace import Atom
 from opencog.web.api.mappers import *
 from flask_restful.utils import cors
 from flask_restful_swagger import swagger
+from opencog.bank import AttentionBank
 
 # Temporary hack
 from opencog.web.api.utilities import get_atoms_by_name
@@ -61,7 +62,7 @@ class AtomCollectionAPI(Resource):
     # (https://github.com/twilio/flask-restful/pull/131):
     @cors.crossdomain(origin='*')
     @swagger.operation(
-    notes='''
+	notes='''
 <p>URI: <code>atoms/[id]</code>
 <p>(or)
 <code>atoms?type=[type]&name=[name]&filterby=[filterby]
@@ -701,17 +702,24 @@ containing the atom.
                 the_atom.tv = tv
 
             if 'attentionvalue' in data:
-                (sti, lti, vlti) = ParseAttentionValue.parse(data)
-                the_atom.av = {'sti': sti, 'lti': lti, 'vlti': vlti}
+                (sti, lti, vlti) = ParseAttentionValue.parse(data)				                
+                attention_bank = AttentionBank(the_atom.atomspace)
+                attention_bank.set_av(the_atom, sti, lti)
 
             dicty = marshal(the_atom, atom_fields)
             dicty['handle'] = self.atom_map.get_uid(the_atom)
+            if 'attentionvalue' in data:
+                dicty['attentionvalue'] = {
+                    'sti': attention_bank.get_sti(the_atom),
+                    'lti': attention_bank.get_lti(the_atom),
+                    'vlti': attention_bank.get_vlti(the_atom)
+                }
             return {'atoms': dicty}
         else:
             abort(404, 'Atom not found')
 
     @swagger.operation(
-	notes='''
+    notes='''
 Returns a JSON representation of the result, indicating success or failure.
 
 <p>Example:
