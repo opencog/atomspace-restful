@@ -1,3 +1,7 @@
+#! /usr/bin/env python3
+#
+# Start the restful server.
+
 from opencog.web.api.apimain import RESTAPI
 from opencog.atomspace import AtomSpace, types
 from opencog.utilities import initialize_opencog

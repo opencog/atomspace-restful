@@ -2,8 +2,10 @@ This directory contains example scripts for starting the restapi and
 interacting with it through a client.
 
 # Steps
-1. Install atomspace and cogutil
-2. Run the following, replace `/path/to/opencog/clone` with your actual git
+1. Install atomspace and cogutil.
+2. Install `flask`. On Ubuntu, this is `sudo apt install python3-flask`
+
+3. Run the following, replace `/path/to/opencog/clone` with your actual git
    clone path.
 
    ```
@@ -12,8 +14,8 @@ interacting with it through a client.
    export PYTHONPATH="${PYTHONPATH}:/path/to/opencog/clone/build/opencog/cython"
    ```
 
-3. Start the restapi. There are two options use either one.
+4. Start the restapi. There are two options use either one.
    * run `python start_restapi.py`
    * run `guile -l start-restapi.scm`
-4. In a separate terminal run ` python exampleclient.py` for interacting with
+5. In a separate terminal run `python exampleclient.py` for interacting with
    the atomspace.

@@ -4,7 +4,10 @@ AtomSpace RESTful Web API
 This module exposes a RESTful web interface to the
 [AtomSpace](https://github.com/opencog/atomspace).
 
-See http://wiki.opencog.org/w/REST_API for details.
+The code here is needed by the
+[AtomSpace Explorer](https://github.com/opencog/atomspace-explorer).
+
+See http://wiki.opencog.org/w/REST_API for some more info.
 
 Prerequisites
 -------------
@@ -33,16 +36,20 @@ be built and run.
 > It uses exactly the same build procedure as this package. Be sure
   to `sudo make install` at the end.
 
+###### Flask
+> Python micro web server
+> Try `sudo apt install python3-flask`
+
 ###### CppREST
 > C++ HTTP RESTful interfaces
-> Used by the Pattern miner for distributed processing (this will be
-  replaced by gearman in future releases).
+> (Optional) Used by the Pattern miner for distributed processing
+  (this will be replaced by gearman in future releases).
 > `sudo apt-get install libcpprest-dev`
 
 ###### Threading Building Blocks
 > C++ template library for parallel programming
-> Used to implement the optional REST API. (TODO: the REST API should
-  be refactored to not use TBB)
+> (Optional) Used to implement the optional REST API. (TODO: the
+  REST API should be refactored to not use TBB)
 > `sudo apt-get install libtbb-dev`
 
 Building
@@ -65,6 +72,11 @@ To build and run the unit tests, from the `./build` directory enter
 ```
     make test
 ```
+
+Running
+-------
+To start the system, run one of the servers in the
+[examples/restapi](examples/restapi) directory.
 
 TODO
 ----
