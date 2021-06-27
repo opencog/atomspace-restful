@@ -21,8 +21,8 @@ ENDIF(CMAKE_VERSION VERSION_GREATER 3.0.2)
 
 PROJECT(opencog)
 
-FIND_PACKAGE(Boost 1.67 REQUIRED date_time program_options thread filesystem system unit_test_framework)
-IF(${Boost_FOUND})
+# FIND_PACKAGE(Boost 1.67 REQUIRED date_time program_options thread filesystem system unit_test_framework)
+# IF(${Boost_FOUND})
   INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
 ENDIF()
 # ----------------------------------------------------------

@@ -36,9 +36,9 @@ be built and run.
 > It uses exactly the same build procedure as this package. Be sure
   to `sudo make install` at the end.
 
-###### Flask
+###### Flask and Flask RESTful
 > Python micro web server
-> Try `sudo apt install python3-flask`
+> Try `sudo apt install python3-flask python3-flask-restful python3-flask-cors`
 
 ###### CppREST
 > C++ HTTP RESTful interfaces
