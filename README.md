@@ -7,7 +7,13 @@ This module exposes a RESTful web interface to the
 The code here is needed by the
 [AtomSpace Explorer](https://github.com/opencog/atomspace-explorer).
 
-See http://wiki.opencog.org/w/REST_API for some more info.
+Warning: This code appears to be obsolete. It uses a number of
+deprecated Atomspace API's (the attention bank, for example) and
+has dependencies on technologies that are not available on Ubuntu
+(for example, "swagger"). At this time, you can install it, but it
+will get python errors when you ty to run it.
+
+See http://wiki.opencog.org/w/REST_API for old documentation.
 
 Prerequisites
 -------------

@@ -13,13 +13,6 @@ interacting with it through a client.
    export PYTHONPATH="${PYTHONPATH}:/usr/lib/python3/dist-packages"
    ```
 
-   I think these are not needed any more:
-   ```
-   export PYTHONPATH="${PYTHONPATH}:/usr/local/share/opencog/python"
-   export PYTHONPATH="${PYTHONPATH}:/path/to/opencog/clone/opencog/python/"
-   export PYTHONPATH="${PYTHONPATH}:/path/to/opencog/clone/build/opencog/cython"
-   ```
-
 4. Start the restapi. There are two options use either one.
    * run `python start_restapi.py`
    * run `guile -l start-restapi.scm`
