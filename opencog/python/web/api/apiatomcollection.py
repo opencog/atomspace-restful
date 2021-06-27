@@ -6,7 +6,9 @@ import opencog.cogserver
 from opencog.atomspace import Atom
 from opencog.web.api.mappers import *
 from flask_restful.utils import cors
-from flask_restful_swagger import swagger
+
+# I can't find swagger on ubuntu .. wtf!? FIXME
+# from flask_restful_swagger import swagger
 from opencog.bank import AttentionBank
 
 # Temporary hack
@@ -61,64 +63,64 @@ class AtomCollectionAPI(Resource):
     # Set CORS headers to allow cross-origin access
     # (https://github.com/twilio/flask-restful/pull/131):
     @cors.crossdomain(origin='*')
-    @swagger.operation(
-	notes='''
-<p>URI: <code>atoms/[id]</code>
-<p>(or)
-<code>atoms?type=[type]&name=[name]&filterby=[filterby]
-    &tvStrengthMin=[tvStrengthMin]&tvConfidenceMin=[tvConfidenceMin]
-    &tvCountMin=[tvCountMin]&includeIncoming=[includeIncoming]
-    &includeOutgoing=[includeOutgoing]&limit=[limit]&callback=[callback]</code>
-
-<p>Example:
-
-<pre>{
-  'result':
-  {
-    'complete': 'true',
-    'skipped': 'false',
-    'total': 10,
-    'atoms':
-      [
-	{ 'handle': 6,
-	  'name': '',
-	  'type': 'InheritanceLink',
-	  'outgoing': [2, 1],
-	  'incoming': [],
-	  'truthvalue':
-	    {
-	      'type': 'simple',
-	      'details':
-		{
-		  'count': '0.4000000059604645',
-		  'confidence': '0.0004997501382604241',
-		  'strength': '0.5'
-		}
-	    }
-	  'attentionvalue':
-	    {
-	      'lti': 0,
-	      'sti': 0,
-	      'vlti': false
-	    }
-	},
-	      ...
-      ]
-  }
-}
-</pre>
-
-<p>Examples using optional predefined filters:
-
-<dl>
-  <dt>Get all atoms in the AttentionalFocus</dt>
-  <dd>URI: <code>atoms?filterby=attentionalfocus</dd>
-  <dt>Get all atoms in the STI range between 5 (inclusive) and 10 (inclusive)</dt>
-  <dd>URI: <code>atoms?filterby=stirange&stimin=5&stimax=10</code></dd>
-  <dt>Get all atoms with STI greater than or equal to 5</dt>
-  <dd>URI: <code>atoms?filterby=stirange&stimin=5</code></dd>
-</dl>
-''',
+#    @swagger.operation(
+#	notes='''
+#<p>URI: <code>atoms/[id]</code>
+#<p>(or)
+#<code>atoms?type=[type]&name=[name]&filterby=[filterby]
+#    &tvStrengthMin=[tvStrengthMin]&tvConfidenceMin=[tvConfidenceMin]
+#    &tvCountMin=[tvCountMin]&includeIncoming=[includeIncoming]
+#    &includeOutgoing=[includeOutgoing]&limit=[limit]&callback=[callback]</code>
+#
+#<p>Example:
+#
+#<pre>{
+#  'result':
+#  {
+#    'complete': 'true',
+#    'skipped': 'false',
+#    'total': 10,
+#    'atoms':
+#      [
+#	{ 'handle': 6,
+#	  'name': '',
+#	  'type': 'InheritanceLink',
+#	  'outgoing': [2, 1],
+#	  'incoming': [],
+#	  'truthvalue':
+#	    {
+#	      'type': 'simple',
+#	      'details':
+#		{
+#		  'count': '0.4000000059604645',
+#		  'confidence': '0.0004997501382604241',
+#		  'strength': '0.5'
+#		}
+#	    }
+#	  'attentionvalue':
+#	    {
+#	      'lti': 0,
+#	      'sti': 0,
+#	      'vlti': false
+#	    }
+#	},
+#	      ...
+#      ]
+#  }
+#}
+#</pre>
+#
+#<p>Examples using optional predefined filters:
+#
+#<dl>
+#  <dt>Get all atoms in the AttentionalFocus</dt>
+#  <dd>URI: <code>atoms?filterby=attentionalfocus</dd>
+#  <dt>Get all atoms in the STI range between 5 (inclusive) and 10 (inclusive)</dt>
+#  <dd>URI: <code>atoms?filterby=stirange&stimin=5&stimax=10</code></dd>
+#  <dt>Get all atoms with STI greater than or equal to 5</dt>
+#  <dd>URI: <code>atoms?filterby=stirange&stimin=5</code></dd>
+#</dl>
+#''',
 	responseClass=Atom,
 	nickname='get',
 	parameters=[
