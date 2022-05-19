@@ -4,19 +4,19 @@ AtomSpace RESTful Web API
 Attention! This code is obsolete!
 =================================
  1) It uses a number of deprecated Atomspace API's (the attention bank,
-    for example) 
+    for example)
  2) Has dependencies on technologies that are not available on Ubuntu
-    (for example, "swagger"). 
+    (for example, "swagger").
  3) Will not compile on current versions (22.04) of Ubuntu.
  4) Older versions (18.04) allow it to compile, but it will generate
-    python errors when you try to run it. Basically, it won't work.    
+    python errors when you try to run it. Basically, it won't work.
  5) The JSON format it generates is an incorrect representation of
     of AtomSpace contents. It's not how the AtomSpce actually works.
-    
+
 The correct solution is to throw away this code, and port the visualizer
 to use the supported Atomese interfaces. See the
 [AtomSpace Explorer Issue #8](https://github.com/opencog/atomspace-explorer/issues/8)
-for details on how to do this. 
+for details on how to do this.
 
 Overview
 --------
